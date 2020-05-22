@@ -23,9 +23,10 @@
         @draggedUp="emitAndNext('skip')"
         class="rounded-borders card card--one">
         <div style="height: 100%">
-          <img
-            :src="require(`../assets/images/${current.src}`)"
-            class="rounded-borders"/>
+          <img 
+          :srcset="checkurl"
+          :src="checkurl"
+          class="rounded-borders" />
           <div class="text">
             <h2>{{current.name}}, <span>{{current.rating}}</span></h2>
             <h4>{{current.location}}
@@ -38,9 +39,10 @@
       class="rounded-borders card card--two fixed fixed--center"
       style="z-index: 2">
       <div style="height: 100%">
-        <img
-          :src="require(`../assets/images/${next.src}`)"
-          class="rounded-borders"/>
+        <img 
+        class="rounded-borders" 
+        :srcset="checkurl"
+        :src="checkurl"/>
         <div class="text">
             <h2>{{next.name}}, <span>{{next.rating}}</span></h2>
             <h4>{{next.location}}
@@ -64,11 +66,64 @@
       <div class="btn btn--like" @click="match">
           <i style="top: 44%; font-size: 26px; font-style: normal;">🙌</i>
       </div>
+      <div id="map"></div>
     </div>
+
   </section>
 </template>
+ 
 <script>
-import { Vue2InteractDraggable, InteractEventBus } from 'vue2-interact'
+
+import { Vue2InteractDraggable, InteractEventBus } from 'vue2-interact';
+
+
+
+
+
+ 
+    var sydney = new google.maps.LatLng(52.5639745, -0.1409372);
+    var map;
+    var service;
+    var restdata = [];
+
+    map = new google.maps.Map(
+    document.getElementById('map'), {center: sydney, zoom: 15});
+    var request = {
+      location: sydney,
+      radius: '5000',
+      type: ['restaurant']
+    };
+    service = new google.maps.places.PlacesService(map);
+    service.nearbySearch(request, callback);
+  
+
+  function callback(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        
+        if(results[i]["business_status"] === "OPERATIONAL") {
+        //  Restaurant is operational
+          
+          if(results[i].hasOwnProperty("photos")) {
+
+          //GETS ALL PHOTOS
+          //results[i].photos.forEach(photo => {
+          //  console.log(photo.getUrl({maxHeight: 300})) // will log a url but no photo_reference
+          //})
+
+            
+            let imageurl = JSON.stringify(results[i].photos[0].getUrl({maxHeight: 800}))
+            restdata.push({ src: imageurl, name: results[i]["name"], location: results[i]["vicinity"], rating: (results[i]["rating"] == null ? "No Rating" : results[i]["rating"] + "⭐")})
+       
+          } else {
+            restdata.push({ src: 'karina.jpg', name: results[i]["name"], location: results[i]["vicinity"], rating: (results[i]["rating"] == null ? "No Rating" : results[i]["rating"] + "⭐")})
+          }
+        }
+      }
+      console.log(restdata);
+    } 
+  }
+
 const EVENTS = {
   MATCH: 'match',
   SKIP: 'skip',
@@ -78,8 +133,36 @@ const EVENTS = {
 export default {
   name: 'SwipeableCards',
   components: { Vue2InteractDraggable },
-  data: {
-    results: getData()
+  data() {
+
+   
+
+    let carddata = [{ src: 'karina.jpg', name: 'Chiquitos', location: "Hampton", rating: "⭐⭐⭐" },
+      { src: 'alexander.jpg', name: 'Bella Italia', location: "Hampton", rating: "⭐⭐⭐⭐⭐" },
+      { src: 'bona.jpg', name: 'Pizza Cafe', location: "Peterborough", rating: "⭐⭐⭐" },
+      { src: 'ichi.jpg', name: 'Prezzo\'s', location: "Peterborough", rating: "⭐⭐" },
+      { src: 'lloyd.jpg', name: 'Chimmichangas', location: "Peterborough", rating: "⭐⭐⭐" },
+      { src: 'luiza.jpg', name: 'Turtle Bay', location: "Peterborough", rating: "⭐⭐⭐⭐" },
+      { src: 'max.jpg', name: 'The Queen\'s Head', location: "Peterborough", rating: "⭐⭐⭐⭐⭐" },
+      { src: 'mona.jpg', name: 'Five Guys', location: "Peterborough", rating: "⭐" },
+      { src: 'naru.jpg', name: 'Tavan', location: "Peterborough", rating: "⭐⭐" },
+      { src: 'ramdan.jpg', name: 'Cote Brassarie', location: "Peterborough", rating: "⭐" },
+      { src: 'rikki-austin.jpg', name: 'East', location: "Peteborough", rating: "⭐" },
+      { src: 'tucker.jpg', name: 'Bills', location: "Peterborough", rating: "⭐" },
+      { src: 'uriel.jpg', name: 'The Pizza Parlour', location: "Peterborough", rating: "⭐⭐⭐" },
+      { src: 'zoe.jpg', name: 'The Banyan Tree', location: "Peterborough", rating: "⭐⭐⭐⭐⭐⭐" }]
+
+    return {
+      isVisible: true,
+      index: 0,
+      interactEventBus: {
+        draggedRight: EVENTS.MATCH,
+        draggedLeft: EVENTS.REJECT,
+        draggedUp: EVENTS.SKIP
+      },
+      cards: restdata
+    }
+
   },
   computed: {
     current() {
@@ -87,6 +170,20 @@ export default {
     },
     next() {
       return this.cards[this.index + 1]
+    },
+    checkurl(){
+      var url = this.cards[this.index].src
+      if(url.includes("google", 0)){
+        console.log(url)
+        url = url.replace("http://localhost/assets/images/","")
+        console.log(url)
+        return url
+      } else {
+        return require("../assets/images/" + url)
+      }
+    },
+    defaultimage(){
+      return require("../assets/images/karina.jpg")
     }
   },
   methods: {
@@ -106,33 +203,6 @@ export default {
         this.index++
         this.isVisible = true
       }, 200)
-    },
-    getData(){
-      let carddata = [{ src: 'karina.jpg', name: 'Chiquitos', location: "Hampton", rating: "⭐⭐⭐" },
-        { src: 'alexander.jpg', name: 'Bella Italia', location: "Hampton", rating: "⭐⭐⭐⭐⭐" },
-        { src: 'bona.jpg', name: 'Pizza Cafe', location: "Peterborough", rating: "⭐⭐⭐" },
-        { src: 'ichi.jpg', name: 'Prezzo\'s', location: "Peterborough", rating: "⭐⭐" },
-        { src: 'lloyd.jpg', name: 'Chimmichangas', location: "Peterborough", rating: "⭐⭐⭐" },
-        { src: 'luiza.jpg', name: 'Turtle Bay', location: "Peterborough", rating: "⭐⭐⭐⭐" },
-        { src: 'max.jpg', name: 'The Queen\'s Head', location: "Peterborough", rating: "⭐⭐⭐⭐⭐" },
-        { src: 'mona.jpg', name: 'Five Guys', location: "Peterborough", rating: "⭐" },
-        { src: 'naru.jpg', name: 'Tavan', location: "Peterborough", rating: "⭐⭐" },
-        { src: 'ramdan.jpg', name: 'Cote Brassarie', location: "Peterborough", rating: "⭐" },
-        { src: 'rikki-austin.jpg', name: 'East', location: "Peteborough", rating: "⭐" },
-        { src: 'tucker.jpg', name: 'Bills', location: "Peterborough", rating: "⭐" },
-        { src: 'uriel.jpg', name: 'The Pizza Parlour', location: "Peterborough", rating: "⭐⭐⭐" },
-        { src: 'zoe.jpg', name: 'The Banyan Tree', location: "Peterborough", rating: "⭐⭐⭐⭐⭐⭐" }]
-
-      return {
-        isVisible: true,
-        index: 0,
-        interactEventBus: {
-          draggedRight: EVENTS.MATCH,
-          draggedLeft: EVENTS.REJECT,
-          draggedUp: EVENTS.SKIP
-        },
-        cards: carddata
-      }
     }
   }
 }

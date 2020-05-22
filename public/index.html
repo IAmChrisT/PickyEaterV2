@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css?family=Engagement&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-ZlG3tEsqG6-2H2-qYaEhjkIXvW8ETo&libraries=places"></script>
+   
     <title>Picky Eater</title>
   </head>
   <body>
@@ -19,6 +21,17 @@
       <strong>We're sorry but PickyEater doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
+    <div id="map"></div>
     <!-- built files will be auto injected -->
+    <script>
+      function checkurl(url){
+    if(url.includes("google", 0)){
+      url = url.replace("../assets/images/","")
+      return url
+    } else {
+      return require(url)
+    }
+  }
+      </script>
   </body>
 </html>
