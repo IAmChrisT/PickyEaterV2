@@ -27,7 +27,8 @@
             :src="require(`../assets/images/${current.src}`)"
             class="rounded-borders"/>
           <div class="text">
-            <h2>{{current.name}}, <span>{{current.age}}</span></h2>
+            <h2>{{current.name}}, <span>{{current.location}}</span></h2>
+            <h3>{{current.rating}}</h3>
           </div>
         </div>
       </Vue2InteractDraggable>
@@ -41,7 +42,7 @@
           :src="require(`../assets/images/${next.src}`)"
           class="rounded-borders"/>
         <div class="text">
-            <h2>{{next.name}}, <span>{{next.age}}</span></h2>
+            <h2>{{next.name}}, <span>{{next.location}}</span></h2>
           </div>
       </div>
     </div>
@@ -86,20 +87,20 @@ export default {
         draggedUp: EVENTS.SKIP
       },
       cards: [
-        { src: 'karina.jpg', name: 'Karina', age: 7 },
-        { src: 'alexander.jpg', name: 'Alexander', age: 5 },
-        { src: 'bona.jpg', name: 'Bona', age: 3 },
-        { src: 'ichi.jpg', name: 'Ichi', age: 7 },
-        { src: 'lloyd.jpg', name: 'Lloyd', age: 4 },
-        { src: 'luiza.jpg', name: 'Luiza', age: 9 },
-        { src: 'max.jpg', name: 'Max', age: 6 },
-        { src: 'mona.jpg', name: 'Mona', age: 3 },
-        { src: 'naru.jpg', name: 'Naru', age: 7 },
-        { src: 'ramdan.jpg', name: 'Ramdan', age: 8 },
-        { src: 'rikki-austin.jpg', name: 'Rikki Austin', age: 3 },
-        { src: 'tucker.jpg', name: 'Tucker', age: 9 },
-        { src: 'uriel.jpg', name: 'Uriel', age: 6 },
-        { src: 'zoe.jpg', name: 'Zoe', age: 2 },
+        { src: 'karina.jpg', name: 'Chiquitos', location: 7, rating: "⭐⭐⭐" },
+        { src: 'alexander.jpg', name: 'Bella Italia', location: 5, rating: "⭐⭐⭐⭐⭐" },
+        { src: 'bona.jpg', name: 'Pizza Cafe', location: 3, rating: "⭐⭐⭐" },
+        { src: 'ichi.jpg', name: 'Prezzo\'s', location: 7, rating: "⭐⭐" },
+        { src: 'lloyd.jpg', name: 'Chimmichangas', location: 4, rating: "⭐⭐⭐" },
+        { src: 'luiza.jpg', name: 'Turtle Bay', location: 9, rating: "⭐⭐⭐⭐" },
+        { src: 'max.jpg', name: 'The Queen\'s Head', location: 6, rating: "⭐⭐⭐⭐⭐" },
+        { src: 'mona.jpg', name: 'Five Guys', location: 3, rating: "⭐" },
+        { src: 'naru.jpg', name: 'Tavan', location: 7, rating: "⭐⭐" },
+        { src: 'ramdan.jpg', name: 'Cote Brassarie', location: 8, rating: "⭐" },
+        { src: 'rikki-austin.jpg', name: 'East', location: "Peteborough", rating: "⭐" },
+        { src: 'tucker.jpg', name: 'Bills', location: 9, rating: "⭐" },
+        { src: 'uriel.jpg', name: 'The Pizza Parlour', location: 6, rating: "⭐⭐⭐" },
+        { src: 'zoe.jpg', name: 'The Banyan Tree', location: 2, rating: "⭐⭐⭐⭐⭐⭐" },
       ]
     }
   },
@@ -153,7 +154,7 @@ export default {
   color: white;
   text-align: center;
   background: #fff;
-  clip-path: polygon(0 1%, 100% 0%, 100% 76%, 0 89%);
+  clip-path: polygon(0 0%, 100% 0%, 100% 76%, 0 89%);
   display: flex;
   justify-content: space-between;
   span {
@@ -169,6 +170,7 @@ export default {
 
 .logo{
   height: 150px;
+  margin-top: 15px;
 }
 
 .footer {
@@ -207,7 +209,7 @@ export default {
     }
   }
   &--like {
-    background-color: red;
+    background-color: rgb(223,17,101);
     padding: .5rem;
     color: white;
     box-shadow: 0 10px 13px -6px rgba(0,0,0,.2), 0 20px 31px 3px rgba(0,0,0,.14), 0 8px 38px 7px rgba(0,0,0,.12);
@@ -273,6 +275,7 @@ export default {
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
     text-indent: 20px;
+    height: 100px;
     span {
       font-weight: normal;
     }
