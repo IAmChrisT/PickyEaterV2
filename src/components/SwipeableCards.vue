@@ -2,7 +2,7 @@
   <section class="container">
     <div class="fixed header">
       <i class="material-icons" @click="index = 0">refresh</i>
-      <span>Picky Eater</span>
+      <img src="../assets/images/logo_small.png" />
       <i class="material-icons">tune</i>
     </div>
     <div
@@ -150,9 +150,9 @@ export default {
   text-align: center;
   font-style: italic;
   font-family: 'Engagement', cursive;
-  background: #df1165;
-  background: -webkit-linear-gradient(to top, #d94e47, #df1165);
-  background: linear-gradient(to top, #d94e47, #df1165);
+  background: rgba(223,17,101,0.3);
+  background: -webkit-linear-gradient(to top, rgba(217,78,71,0.3), rgba(223,17,101,0.3));
+  background: linear-gradient(to top, rgba(217,78,71,0.3), rgba(223,17,101,0.3));
   clip-path: polygon(0 1%, 100% 0%, 100% 76%, 0 89%);
   display: flex;
   justify-content: space-between;
