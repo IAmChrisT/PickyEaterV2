@@ -27,8 +27,8 @@
             :src="require(`../assets/images/${current.src}`)"
             class="rounded-borders"/>
           <div class="text">
-            <h2>{{current.name}}</h2><h4>, <span>{{current.location}}</span><h4>
-            <h3>{{current.rating}}</h3>
+            <h2>{{current.name}}, <span>{{current.rating}}</span></h2>
+            <h4>{{current.location}}
           </div>
         </div>
       </Vue2InteractDraggable>
@@ -42,7 +42,8 @@
           :src="require(`../assets/images/${next.src}`)"
           class="rounded-borders"/>
         <div class="text">
-            <h2>{{next.name}}, <span>{{next.location}}</span></h2>
+            <h2>{{next.name}}, <span>{{next.rating}}</span></h2>
+            <h4>{{next.location}}
           </div>
       </div>
     </div>
@@ -61,7 +62,7 @@
           <i class="material-icons">call_missed</i>
       </div>
       <div class="btn btn--like" @click="match">
-          <i class="material-icons">favorite</i>
+          <i style="top: 44%; font-size: 26px; font-style: normal;">🙌</i>
       </div>
     </div>
   </section>
@@ -77,32 +78,8 @@ const EVENTS = {
 export default {
   name: 'SwipeableCards',
   components: { Vue2InteractDraggable },
-  data() {
-    return {
-      isVisible: true,
-      index: 0,
-      interactEventBus: {
-        draggedRight: EVENTS.MATCH,
-        draggedLeft: EVENTS.REJECT,
-        draggedUp: EVENTS.SKIP
-      },
-      cards: [
-        { src: 'karina.jpg', name: 'Chiquitos', location: "Hampton", rating: "⭐⭐⭐" },
-        { src: 'alexander.jpg', name: 'Bella Italia', location: "Hampton", rating: "⭐⭐⭐⭐⭐" },
-        { src: 'bona.jpg', name: 'Pizza Cafe', location: "Peterborough", rating: "⭐⭐⭐" },
-        { src: 'ichi.jpg', name: 'Prezzo\'s', location: "Peterborough", rating: "⭐⭐" },
-        { src: 'lloyd.jpg', name: 'Chimmichangas', location: "Peterborough", rating: "⭐⭐⭐" },
-        { src: 'luiza.jpg', name: 'Turtle Bay', location: "Peterborough", rating: "⭐⭐⭐⭐" },
-        { src: 'max.jpg', name: 'The Queen\'s Head', location: "Peterborough", rating: "⭐⭐⭐⭐⭐" },
-        { src: 'mona.jpg', name: 'Five Guys', location: "Peterborough", rating: "⭐" },
-        { src: 'naru.jpg', name: 'Tavan', location: "Peterborough", rating: "⭐⭐" },
-        { src: 'ramdan.jpg', name: 'Cote Brassarie', location: "Peterborough", rating: "⭐" },
-        { src: 'rikki-austin.jpg', name: 'East', location: "Peteborough", rating: "⭐" },
-        { src: 'tucker.jpg', name: 'Bill\'s, location: "Peterborough", rating: "⭐" },
-        { src: 'uriel.jpg', name: 'The Pizza Parlour', location: "Peterborough", rating: "⭐⭐⭐" },
-        { src: 'zoe.jpg', name: 'The Banyan Tree', location: "Peterborough", rating: "⭐⭐⭐⭐⭐⭐" },
-      ]
-    }
+  data: {
+    results: getData()
   },
   computed: {
     current() {
@@ -129,6 +106,33 @@ export default {
         this.index++
         this.isVisible = true
       }, 200)
+    },
+    getData(){
+      let carddata = [{ src: 'karina.jpg', name: 'Chiquitos', location: "Hampton", rating: "⭐⭐⭐" },
+        { src: 'alexander.jpg', name: 'Bella Italia', location: "Hampton", rating: "⭐⭐⭐⭐⭐" },
+        { src: 'bona.jpg', name: 'Pizza Cafe', location: "Peterborough", rating: "⭐⭐⭐" },
+        { src: 'ichi.jpg', name: 'Prezzo\'s', location: "Peterborough", rating: "⭐⭐" },
+        { src: 'lloyd.jpg', name: 'Chimmichangas', location: "Peterborough", rating: "⭐⭐⭐" },
+        { src: 'luiza.jpg', name: 'Turtle Bay', location: "Peterborough", rating: "⭐⭐⭐⭐" },
+        { src: 'max.jpg', name: 'The Queen\'s Head', location: "Peterborough", rating: "⭐⭐⭐⭐⭐" },
+        { src: 'mona.jpg', name: 'Five Guys', location: "Peterborough", rating: "⭐" },
+        { src: 'naru.jpg', name: 'Tavan', location: "Peterborough", rating: "⭐⭐" },
+        { src: 'ramdan.jpg', name: 'Cote Brassarie', location: "Peterborough", rating: "⭐" },
+        { src: 'rikki-austin.jpg', name: 'East', location: "Peteborough", rating: "⭐" },
+        { src: 'tucker.jpg', name: 'Bills', location: "Peterborough", rating: "⭐" },
+        { src: 'uriel.jpg', name: 'The Pizza Parlour', location: "Peterborough", rating: "⭐⭐⭐" },
+        { src: 'zoe.jpg', name: 'The Banyan Tree', location: "Peterborough", rating: "⭐⭐⭐⭐⭐⭐" }]
+
+      return {
+        isVisible: true,
+        index: 0,
+        interactEventBus: {
+          draggedRight: EVENTS.MATCH,
+          draggedLeft: EVENTS.REJECT,
+          draggedUp: EVENTS.SKIP
+        },
+        cards: carddata
+      }
     }
   }
 }
@@ -294,5 +298,22 @@ export default {
   to {
     transform: translate(-50%, -50%);
   }
+}
+
+.h2{
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.h4 {
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
 }
 </style>
