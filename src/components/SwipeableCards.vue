@@ -27,7 +27,7 @@
             :src="require(`../assets/images/${current.src}`)"
             class="rounded-borders"/>
           <div class="text">
-            <h2>{{current.name}}, <span>{{current.location}}</span></h2>
+            <h2>{{current.name}}</h2><h4>, <span>{{current.location}}</span><h4>
             <h3>{{current.rating}}</h3>
           </div>
         </div>
@@ -87,20 +87,20 @@ export default {
         draggedUp: EVENTS.SKIP
       },
       cards: [
-        { src: 'karina.jpg', name: 'Chiquitos', location: 7, rating: "⭐⭐⭐" },
-        { src: 'alexander.jpg', name: 'Bella Italia', location: 5, rating: "⭐⭐⭐⭐⭐" },
-        { src: 'bona.jpg', name: 'Pizza Cafe', location: 3, rating: "⭐⭐⭐" },
-        { src: 'ichi.jpg', name: 'Prezzo\'s', location: 7, rating: "⭐⭐" },
-        { src: 'lloyd.jpg', name: 'Chimmichangas', location: 4, rating: "⭐⭐⭐" },
-        { src: 'luiza.jpg', name: 'Turtle Bay', location: 9, rating: "⭐⭐⭐⭐" },
-        { src: 'max.jpg', name: 'The Queen\'s Head', location: 6, rating: "⭐⭐⭐⭐⭐" },
-        { src: 'mona.jpg', name: 'Five Guys', location: 3, rating: "⭐" },
-        { src: 'naru.jpg', name: 'Tavan', location: 7, rating: "⭐⭐" },
-        { src: 'ramdan.jpg', name: 'Cote Brassarie', location: 8, rating: "⭐" },
+        { src: 'karina.jpg', name: 'Chiquitos', location: "Hampton", rating: "⭐⭐⭐" },
+        { src: 'alexander.jpg', name: 'Bella Italia', location: "Hampton", rating: "⭐⭐⭐⭐⭐" },
+        { src: 'bona.jpg', name: 'Pizza Cafe', location: "Peterborough", rating: "⭐⭐⭐" },
+        { src: 'ichi.jpg', name: 'Prezzo\'s', location: "Peterborough", rating: "⭐⭐" },
+        { src: 'lloyd.jpg', name: 'Chimmichangas', location: "Peterborough", rating: "⭐⭐⭐" },
+        { src: 'luiza.jpg', name: 'Turtle Bay', location: "Peterborough", rating: "⭐⭐⭐⭐" },
+        { src: 'max.jpg', name: 'The Queen\'s Head', location: "Peterborough", rating: "⭐⭐⭐⭐⭐" },
+        { src: 'mona.jpg', name: 'Five Guys', location: "Peterborough", rating: "⭐" },
+        { src: 'naru.jpg', name: 'Tavan', location: "Peterborough", rating: "⭐⭐" },
+        { src: 'ramdan.jpg', name: 'Cote Brassarie', location: "Peterborough", rating: "⭐" },
         { src: 'rikki-austin.jpg', name: 'East', location: "Peteborough", rating: "⭐" },
-        { src: 'tucker.jpg', name: 'Bills', location: 9, rating: "⭐" },
-        { src: 'uriel.jpg', name: 'The Pizza Parlour', location: 6, rating: "⭐⭐⭐" },
-        { src: 'zoe.jpg', name: 'The Banyan Tree', location: 2, rating: "⭐⭐⭐⭐⭐⭐" },
+        { src: 'tucker.jpg', name: 'Bill\'s, location: "Peterborough", rating: "⭐" },
+        { src: 'uriel.jpg', name: 'The Pizza Parlour', location: "Peterborough", rating: "⭐⭐⭐" },
+        { src: 'zoe.jpg', name: 'The Banyan Tree', location: "Peterborough", rating: "⭐⭐⭐⭐⭐⭐" },
       ]
     }
   },
@@ -275,6 +275,7 @@ export default {
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
     text-indent: 20px;
+    line-height: 20px;
     height: 100px;
     span {
       font-weight: normal;
