@@ -2,7 +2,7 @@
   <section class="container">
     <div class="fixed header">
       <i class="material-icons" @click="index = 0">refresh</i>
-      <span>Kittynder</span>
+      <span>Picky Eater</span>
       <i class="material-icons">tune</i>
     </div>
     <div
@@ -150,9 +150,9 @@ export default {
   text-align: center;
   font-style: italic;
   font-family: 'Engagement', cursive;
-  background: #f953c6;
-  background: -webkit-linear-gradient(to top, #b91d73, #f953c6);
-  background: linear-gradient(to top, #b91d73, #f953c6);
+  background: #df1165;
+  background: -webkit-linear-gradient(to top, #d94e47, #df1165);
+  background: linear-gradient(to top, #d94e47, #df1165);
   clip-path: polygon(0 1%, 100% 0%, 100% 76%, 0 89%);
   display: flex;
   justify-content: space-between;
