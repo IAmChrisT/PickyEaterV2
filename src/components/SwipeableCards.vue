@@ -2,7 +2,7 @@
   <section class="container">
     <div class="fixed header">
       <i class="material-icons" @click="index = 0">refresh</i>
-      <img src="../assets/images/logo_small.png" />
+      <img class="logo" src="../assets/images/Logo_Small_t.png" />
       <i class="material-icons">tune</i>
     </div>
     <div
@@ -151,8 +151,8 @@ export default {
   font-style: italic;
   font-family: 'Engagement', cursive;
   background: rgba(223,17,101,0.3);
-  background: -webkit-linear-gradient(to top, rgba(217,78,71,0.3), rgba(223,17,101,0.3));
-  background: linear-gradient(to top, rgba(217,78,71,0.3), rgba(223,17,101,0.3));
+  background: -webkit-linear-gradient(to top, rgba(217,78,71,0.5), rgba(223,17,101,0.9));
+  background: linear-gradient(to top, rgba(217,78,71,0.5), rgba(223,17,101,0.9));
   clip-path: polygon(0 1%, 100% 0%, 100% 76%, 0 89%);
   display: flex;
   justify-content: space-between;
@@ -165,6 +165,10 @@ export default {
   i {
     padding: 24px;
   }
+}
+
+.logo{
+  height: 150px;
 }
 
 .footer {
