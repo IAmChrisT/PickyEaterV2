@@ -1,9 +1,9 @@
 <template>
   <section class="container">
     <div class="fixed header">
-      <i class="material-icons" @click="index = 0">refresh</i>
+      <i class="material-icons color-pink" @click="index = 0">refresh</i>
       <img class="logo" src="../assets/images/Logo_Small_t.png" />
-      <i class="material-icons">tune</i>
+      <i class="material-icons color-pink">tune</i>
     </div>
     <div
       v-if="current"
@@ -140,6 +140,10 @@ export default {
   height: 100vh;
 }
 
+.color-pink{
+  color: rgb(223,17,101);
+}
+
 .header {
   width: 100%;
   height: 60vh;
@@ -148,11 +152,7 @@ export default {
   left: 0;
   color: white;
   text-align: center;
-  font-style: italic;
-  font-family: 'Engagement', cursive;
-  background: rgba(223,17,101,0.3);
-  background: -webkit-linear-gradient(to top, rgba(217,78,71,0.5), rgba(223,17,101,0.9));
-  background: linear-gradient(to top, rgba(217,78,71,0.5), rgba(223,17,101,0.9));
+  background: #fff;
   clip-path: polygon(0 1%, 100% 0%, 100% 76%, 0 89%);
   display: flex;
   justify-content: space-between;
