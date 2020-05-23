@@ -24,8 +24,8 @@
         class="rounded-borders card card--one">
         <div style="height: 100%">
           <img 
-          :srcset="checkurl"
-          :src="checkurl"
+          :srcset="this.checkurl"
+          :src="this.checkurl"
           class="rounded-borders" />
           <div class="text">
             <h2>{{current.name}}, <span>{{current.rating}}</span></h2>
@@ -39,10 +39,8 @@
       class="rounded-borders card card--two fixed fixed--center"
       style="z-index: 2">
       <div style="height: 100%">
-        <img 
-        class="rounded-borders" 
-        :srcset="checkurl"
-        :src="checkurl"/>
+        <img class="rounded-borders" :srcset="this.checknexturl"
+        :src="this.checknexturl"/>
         <div class="text">
             <h2>{{next.name}}, <span>{{next.rating}}</span></h2>
             <h4>{{next.location}}
@@ -64,11 +62,12 @@
           <i class="material-icons">call_missed</i>
       </div>
       <div class="btn btn--like" @click="match">
+
           <i style="top: 44%; font-size: 26px; font-style: normal;">🙌</i>
       </div>
-      <div id="map"></div>
+      
     </div>
-
+    <div id="map"></div>
   </section>
 </template>
  
@@ -81,15 +80,15 @@ import { Vue2InteractDraggable, InteractEventBus } from 'vue2-interact';
 
 
  
-    var sydney = new google.maps.LatLng(52.5639745, -0.1409372);
+    var loc = new google.maps.LatLng(52.5639745, -0.1409372);
     var map;
     var service;
     var restdata = [];
 
     map = new google.maps.Map(
-    document.getElementById('map'), {center: sydney, zoom: 15});
+    document.getElementById('map'), {center: loc, zoom: 15});
     var request = {
-      location: sydney,
+      location: loc,
       radius: '5000',
       type: ['restaurant']
     };
@@ -111,16 +110,16 @@ import { Vue2InteractDraggable, InteractEventBus } from 'vue2-interact';
           //  console.log(photo.getUrl({maxHeight: 300})) // will log a url but no photo_reference
           //})
 
+            let imageurl = results[i].photos[0].getUrl({maxWidth: 5000, maxHeight: 5000})
             
-            let imageurl = JSON.stringify(results[i].photos[0].getUrl({maxHeight: 800}))
             restdata.push({ src: imageurl, name: results[i]["name"], location: results[i]["vicinity"], rating: (results[i]["rating"] == null ? "No Rating" : results[i]["rating"] + "⭐")})
        
           } else {
-            restdata.push({ src: 'karina.jpg', name: results[i]["name"], location: results[i]["vicinity"], rating: (results[i]["rating"] == null ? "No Rating" : results[i]["rating"] + "⭐")})
+            restdata.push({ src: 'missing_image.png', name: results[i]["name"], location: results[i]["vicinity"], rating: (results[i]["rating"] == null ? "No Rating" : results[i]["rating"] + "⭐")})
           }
         }
       }
-      console.log(restdata);
+      //console.log(restdata);
     } 
   }
 
@@ -134,10 +133,7 @@ export default {
   name: 'SwipeableCards',
   components: { Vue2InteractDraggable },
   data() {
-
-   
-
-    let carddata = [{ src: 'karina.jpg', name: 'Chiquitos', location: "Hampton", rating: "⭐⭐⭐" },
+      /* let carddata = [{ src: 'karina.jpg', name: 'Chiquitos', location: "Hampton", rating: "⭐⭐⭐" },
       { src: 'alexander.jpg', name: 'Bella Italia', location: "Hampton", rating: "⭐⭐⭐⭐⭐" },
       { src: 'bona.jpg', name: 'Pizza Cafe', location: "Peterborough", rating: "⭐⭐⭐" },
       { src: 'ichi.jpg', name: 'Prezzo\'s', location: "Peterborough", rating: "⭐⭐" },
@@ -151,7 +147,7 @@ export default {
       { src: 'tucker.jpg', name: 'Bills', location: "Peterborough", rating: "⭐" },
       { src: 'uriel.jpg', name: 'The Pizza Parlour', location: "Peterborough", rating: "⭐⭐⭐" },
       { src: 'zoe.jpg', name: 'The Banyan Tree', location: "Peterborough", rating: "⭐⭐⭐⭐⭐⭐" }]
-
+ */
     return {
       isVisible: true,
       index: 0,
@@ -171,30 +167,45 @@ export default {
     next() {
       return this.cards[this.index + 1]
     },
-    checkurl(){
+    checkurl() {
       var url = this.cards[this.index].src
       if(url.includes("google", 0)){
-        console.log(url)
+        //console.log(url)
         url = url.replace("http://localhost/assets/images/","")
-        console.log(url)
+        //console.log(url)
+        return url
+      } else {
+        return require("../assets/images/" + url)
+      }
+    },
+    checknexturl(){
+      var card = this.cards[this.index + 1]
+      var url = card.src
+      if(url.includes("google", 0)){
+        //console.log(url)
+        url = url.replace("http://localhost/assets/images/","")
+        //console.log(url)
         return url
       } else {
         return require("../assets/images/" + url)
       }
     },
     defaultimage(){
-      return require("../assets/images/karina.jpg")
+      return require("../assets/images/missing_image.png")
     }
   },
   methods: {
     match() {
       InteractEventBus.$emit(EVENTS.MATCH)
+      
     },
     reject() {
       InteractEventBus.$emit(EVENTS.REJECT)
+      
     },
     skip() {
       InteractEventBus.$emit(EVENTS.SKIP)
+      
     },
     emitAndNext(event) {
       this.$emit(event, this.index)
@@ -203,6 +214,20 @@ export default {
         this.index++
         this.isVisible = true
       }, 200)
+
+      console.log(this.name)
+
+      if(event === "match"){
+        console.log("Sick little match there, going to add it to the database now");
+      }
+
+      if(event === "reject"){
+        console.log("Not feeling that one, let me tell the others");
+      }
+
+      if(event === "skip"){
+        console.log("No opinion, no matter. Onto the next one");
+      }
     }
   }
 }
